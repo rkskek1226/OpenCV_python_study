@@ -170,44 +170,17 @@ import numpy as np
 # cv2.waitKey()
 
 
-# 마우스로 ROI 지정
-isDragging=False
-x0,y0,w,h=-1,-1,-1,-1
-blue,red=(255,0,0),(0,0,255)
-
-def onMouse(event,x,y,flags,param):
-    global isDragging,x0,y0,img
-    if event==cv2.EVENT_LBUTTONDOWN:
-        isDragging=True
-        x0=x
-        y0=0
-    elif event==cv2.EVENT_MOUSEMOVE:
-        if isDragging:
-            img_draw=img.copy()
-            cv2.rectangle(img_draw,(x0,y0),(x,y),blue,2)
-            cv2.imshow("img",img_draw)
-    elif event==cv2.EVENT_LBUTTONUP:
-         if isDragging:
-            isDragging=False
-            w=x-x0
-            h=y-y0
-            if w>0 and h>0:
-               img_draw=img.copy()
-               cv2.rectangle(img_draw,(x0,y0),(x,y),red,2)
-               cv2.imshow("img",img_draw)
-               roi=img[y0:y0+h,x0:x0+w]
-               cv2.imshow("cropped",roi)
-               cv2.moveWindow("croped",0,0)
-            else:
-               cv2.imshow("img",img)
-
-img=cv2.imread("lenna.bmp")
-cv2.imshow("img",img)
-cv2.setMouseCallback("img",onMouse)
-cv2.waitKey()
-cv2.destroyAllWindows()
-
-
+# ROI 지정 함수(selectROI)
+# img=cv2.imread("lenna.bmp")
+# cv2.imshow("img",img)
+#
+# x,y,w,h=cv2.selectROI("img",img,False)
+# roi=img[y:y+h,x:x+h]
+# cv2.imshow("cropped",roi)
+# cv2.moveWindow("cropped",0,0)
+#
+# cv2.waitKey()
+# cv2.destroyAllWindows()
 
 
 # 연산 시간 측정(TickMeter 클래스)
@@ -257,13 +230,166 @@ cv2.destroyAllWindows()
 # plt.show()
 
 
+# 히스토그램
+# src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
+# 
+# if src is None:
+#     sys.exit()
+# 
+# hist=cv2.calcHist([src],[0],None,[256],[0,256])
+# 
+# cv2.imshow("lenna",src)
+# cv2.waitKey()
+# plt.plot(hist)
+# plt.show()
+# 
+# src=cv2.imread("lenna.bmp")
+# 
+# if src is None:
+#     sys.exit()
+# 
+# colors=['b','g','r']
+# channels=cv2.split(src)
+# for(ch,color) in zip(channels,colors):
+#     hist=cv2.calcHist([ch],[0],None,[256],[0,256])
+#     plt.plot(hist,color=color)
+# 
+# cv2.imshow("src",src)
+# plt.show()
+# cv2.waitKey()
+# cv2.destroyAllWindows()
 
 
+# 영상 명암비
+# src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
+#
+# if src is None:
+#     sys.exit()
+#
+# alpha=1.0
+# dst=np.clip((1+alpha)*src-128*alpha,0,255).astype(np.uint8)   # 명암비 조절 함수
+#
+# cv2.imshow("src",src)
+# cv2.imshow("dst",dst)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
 
 
+# 영상 자동 명암비(노멀라이즈)
+# src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
+#
+# if src is None:
+#     sys.exit()
+#
+# dst=cv2.normalize(src,None,0,255,cv2.NORM_MINMAX)
+#
+# cv2.imshow("src",src)
+# cv2.imshow("dst",dst)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
 
 
+# 영상 자동 명암비(이퀄라이즈)
+# src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
+#
+# if src is None:
+#     sys.exit()
+#
+# dst=cv2.equalizeHist(src)
+#
+# cv2.imshow("src",src)
+# cv2.imshow("dst",dst)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
 
 
+# 컬러 영상 이퀄라이즈
+# src=cv2.imread("lenna.bmp")
+# src_ycrcb=cv2.cvtColor(src,cv2.COLOR_BGR2YCrCb)
+#
+# planes=cv2.split(src_ycrcb)
+# planes[0]=cv2.equalizeHist(planes[0])
+# dst=cv2.merge(planes)
+# dst=cv2.cvtColor(dst,cv2.COLOR_YCrCb2BGR)
+#
+# cv2.imshow("dst",dst)
+# cv2.waitKey()
 
 
+# 특정 색상 영상 추출
+# src=cv2.imread("candies.png")
+# src_hsv=cv2.cvtColor(src,cv2.COLOR_BGR2HSV)
+# dst1=cv2.inRange(src,(0,128,0),(100,255,100)) # BGR(0,128,0) ~ BGR(100,255,100)의 범위를 설정하고 범위안의 픽셀들을 255로 설정(아닌 픽셀들은 0으로 설정)
+# dst2=cv2.inRange(src_hsv,(50,150,0),(80,255,255)) # HSV(50,150,0) ~ HSV(80,255,255)의 범위를 설정하고 범위안의 픽셀들을 255로 설정(아닌 픽셀들은 0으로 설정)
+#
+# plt.subplot(141),plt.axis("off"),plt.imshow(src)
+# plt.subplot(142),plt.axis("off"),plt.imshow(src_hsv)
+# plt.subplot(143),plt.axis("off"),plt.imshow(dst1)
+# plt.subplot(144),plt.axis("off"),plt.imshow(dst2)
+# plt.show()
+
+
+# 차영상(absdiff)
+# img1=cv2.imread("robot_arm1.jpg")
+# img2=cv2.imread("robot_arm2.jpg")
+# img1_gray=cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)
+# img2_gray=cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY)
+# diff=cv2.absdiff(img1_gray,img2_gray)
+#
+# ret,diff=cv2.threshold(diff,1,255,cv2.THRESH_BINARY)
+# diff_red=cv2.cvtColor(diff,cv2.COLOR_GRAY2BGR)
+# diff_red[:,:,2]=0
+# spot=cv2.bitwise_xor(img2,diff_red)
+#
+# cv2.imshow("img1",img1)
+# cv2.imshow("img2",img2)
+# cv2.imshow("diff",diff)
+# cv2.imshow("spot",spot)
+# cv2.waitKey()
+
+
+# 크로마키
+# img1=cv2.imread("man_chromakey.jpg")
+# img2=cv2.imread("street.jpg")
+#
+# height1,width1=img1.shape[:2]
+# height2,width2=img2.shape[:2]
+# x=(width2-width1)//2
+# y=height2-height1
+# w=x+width1
+# h=y+height1
+#
+# chromakey=img1[:10,:10,:]
+# offset=20
+#
+# hsv_chroma=cv2.cvtColor(chromakey,cv2.COLOR_BGR2HSV)
+# hsv_img=cv2.cvtColor(img1,cv2.COLOR_BGR2HSV)
+# chroma_h=hsv_chroma[:,:,0]
+# lower=np.array([chroma_h.min()-offset,100,100])
+# upper=np.array([chroma_h.max()+offset,255,255])
+#
+# mask=cv2.inRange(hsv_img,lower,upper)
+# mask_inv=cv2.bitwise_not(mask)
+# roi=img2[y:h,x:w]
+# fg=cv2.bitwise_and(img1,img1,mask=mask_inv)
+# bg=cv2.bitwise_and(roi,roi,mask=mask)
+# img2[y:h,x:w]=fg+bg
+#
+# cv2.imshow("chromakey",img1)
+# cv2.imshow("addrd",img2)
+# cv2.waitKey()
+
+
+# 크로마키(SeamlessClone)
+# img1=cv2.imread("man_chromakey.jpg")
+# img2=cv2.imread("street.jpg")
+# mask=np.full_like(img1,255)
+# height,width=img2.shape[:2]
+# center=(width//2,height//2)
+#
+# normal=cv2.seamlessClone(img1,img2,mask,center,cv2.NORMAL_CLONE)
+# mixed=cv2.seamlessClone(img1,img2,mask,center,cv2.MIXED_CLONE)
+#
+# cv2.imshow("normal",normal)
+# cv2.imshow("mixes",mixed)
+# cv2.waitKey()
