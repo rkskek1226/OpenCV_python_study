@@ -219,7 +219,7 @@ import numpy as np
 # dst1=cv2.add(src1,src2,dtype=cv2.CV_8U)
 # dst2=cv2.addWeighted(src1,0.5,src2,0.5,0.0)
 # dst3=cv2.subtract(src1,src2)
-# dst4=cv2.absdiff(src1,src2)
+# dst4=cv2.absdiff(src1,src2)   # 차이 연산(절대값을 씌움)
 #
 # plt.subplot(231),plt.axis("off"),plt.imshow(src1,"gray"),plt.title("src1")
 # plt.subplot(232),plt.axis("off"),plt.imshow(src2,"gray"),plt.title("src2")
@@ -230,30 +230,41 @@ import numpy as np
 # plt.show()
 
 
+# 논리 연산
+# img1=np.zeros((200,400),dtype=np.uint8)
+# img2=np.zeros((200,400),dtype=np.uint8)
+# img1[:,:200]=255
+# img2[100:200,:]=255
+# bitAnd=cv2.bitwise_and(img1,img2)
+# bitOr=cv2.bitwise_or(img1,img2)
+# bitXor=cv2.bitwise_xor(img1,img2)
+# bitNot=cv2.bitwise_not(img1)
+
+
 # 히스토그램
 # src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
-# 
+#
 # if src is None:
 #     sys.exit()
-# 
+#
 # hist=cv2.calcHist([src],[0],None,[256],[0,256])
-# 
+#
 # cv2.imshow("lenna",src)
 # cv2.waitKey()
 # plt.plot(hist)
 # plt.show()
-# 
+#
 # src=cv2.imread("lenna.bmp")
-# 
+#
 # if src is None:
 #     sys.exit()
-# 
+#
 # colors=['b','g','r']
 # channels=cv2.split(src)
 # for(ch,color) in zip(channels,colors):
 #     hist=cv2.calcHist([ch],[0],None,[256],[0,256])
 #     plt.plot(hist,color=color)
-# 
+#
 # cv2.imshow("src",src)
 # plt.show()
 # cv2.waitKey()
@@ -393,3 +404,22 @@ import numpy as np
 # cv2.imshow("normal",normal)
 # cv2.imshow("mixes",mixed)
 # cv2.waitKey()
+
+
+img1=np.zeros((200,400),dtype=np.uint8)
+img2=np.zeros((200,400),dtype=np.uint8)
+img1[:,:200]=255
+img2[100:200,:]=255
+
+
+r=cv2.bitwise_and(img1,img2)
+cv2.imshow("r",r)
+cv2.imshow("img1",img1)
+cv2.imshow("img2",img2)
+
+cv2.waitKey()
+
+
+
+
+
