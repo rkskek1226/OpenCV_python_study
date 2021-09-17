@@ -243,41 +243,26 @@ import numpy as np
 
 # 히스토그램
 # src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
-#
-# if src is None:
-#     sys.exit()
-#
+
 # hist=cv2.calcHist([src],[0],None,[256],[0,256])
-#
-# cv2.imshow("lenna",src)
-# cv2.waitKey()
+
 # plt.plot(hist)
 # plt.show()
 #
 # src=cv2.imread("lenna.bmp")
-#
-# if src is None:
-#     sys.exit()
 #
 # colors=['b','g','r']
 # channels=cv2.split(src)
 # for(ch,color) in zip(channels,colors):
 #     hist=cv2.calcHist([ch],[0],None,[256],[0,256])
 #     plt.plot(hist,color=color)
-#
-# cv2.imshow("src",src)
 # plt.show()
-# cv2.waitKey()
-# cv2.destroyAllWindows()
 
 
 # 영상 명암비
 # src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
-#
-# if src is None:
-#     sys.exit()
-#
-# alpha=1.0
+
+# alpha=1.0   # alpha 값을 키우면 대비가 더 잘됨
 # dst=np.clip((1+alpha)*src-128*alpha,0,255).astype(np.uint8)   # 명암비 조절 함수
 #
 # cv2.imshow("src",src)
@@ -288,9 +273,6 @@ import numpy as np
 
 # 영상 자동 명암비(노멀라이즈)
 # src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
-#
-# if src is None:
-#     sys.exit()
 #
 # dst=cv2.normalize(src,None,0,255,cv2.NORM_MINMAX)
 #
@@ -404,22 +386,6 @@ import numpy as np
 # cv2.imshow("normal",normal)
 # cv2.imshow("mixes",mixed)
 # cv2.waitKey()
-
-
-img1=np.zeros((200,400),dtype=np.uint8)
-img2=np.zeros((200,400),dtype=np.uint8)
-img1[:,:200]=255
-img2[100:200,:]=255
-
-
-r=cv2.bitwise_and(img1,img2)
-cv2.imshow("r",r)
-cv2.imshow("img1",img1)
-cv2.imshow("img2",img2)
-
-cv2.waitKey()
-
-
 
 
 
