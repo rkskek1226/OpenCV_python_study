@@ -303,13 +303,13 @@ import numpy as np
 # planes=cv2.split(src_ycrcb)
 # planes[0]=cv2.equalizeHist(planes[0])
 # dst=cv2.merge(planes)
-# dst=cv2.cvtColor(dst,cv2.COLOR_YCrCb2BGR)
+# dst=cv2.cvtColor(dst,cv2.COLOR_YCrCb2BGR) # YCrCb를 다시 BGR로 변환해야함
 #
 # cv2.imshow("dst",dst)
 # cv2.waitKey()
 
 
-# 특정 색상 영상 추출
+# 특정 색상 영상 추출( inrange() )
 # src=cv2.imread("candies.png")
 # src_hsv=cv2.cvtColor(src,cv2.COLOR_BGR2HSV)
 # dst1=cv2.inRange(src,(0,128,0),(100,255,100)) # BGR(0,128,0) ~ BGR(100,255,100)의 범위를 설정하고 범위안의 픽셀들을 255로 설정(아닌 픽셀들은 0으로 설정)
@@ -320,7 +320,30 @@ import numpy as np
 # plt.subplot(143),plt.axis("off"),plt.imshow(dst1)
 # plt.subplot(144),plt.axis("off"),plt.imshow(dst2)
 # plt.show()
+# cv2.waitKey()
 
+
+# 히스토그램 역투영
+# src=cv2.imread("candies.png")
+# x,y,w,h=cv2.selectROI(src)
+# src_ycrcb=cv2.cvtColor(src,cv2.COLOR_BGR2YCrCb)
+# crop=src_ycrcb[y:y+h,x:x+w]
+# channels=[1,2] # 0번 채널은 밝기 정보로 GRAYSCALE 값
+# cr_bins=256
+# cb_bins=256
+# histSize=[cr_bins,cb_bins]
+# cr_range=[0,256]
+# cb_range=[0,256]
+# ranges=cr_range+cb_range
+# hist=cv2.calcHist([crop],channels,None,histSize,ranges)
+# hist_norm=cv2.normalize(hist,None,0,255,cv2.NORM_MINMAX,cv2.CV_8U)
+#
+# backProj=cv2.calcBackProject([src_ycrcb],channels,hist,ranges,1)
+# dst=cv2.copyTo(src,backProj)
+# cv2.imshow("backProj",backProj)
+# cv2.imshow("hist_norm",hist_norm)
+# cv2.imshow("dst",dst)
+# cv2.waitKey()
 
 # 차영상(absdiff)
 # img1=cv2.imread("robot_arm1.jpg")
@@ -386,6 +409,73 @@ import numpy as np
 # cv2.imshow("normal",normal)
 # cv2.imshow("mixes",mixed)
 # cv2.waitKey()
+
+
+# 얼굴-해골 합성
+# alpha_width_rate=15
+# img_face=cv2.imread("man_face.jpg")
+# img_skull=cv2.imread("skull.jpg")
+# img_comp=np.zeros_like(img_face)
+#
+# h,w=img_face.shape[:2]
+# middle=w//2
+# alpha_width=w*alpha_width_rate//100
+# start=middle-alpha_width//2
+# step=100/alpha_width
+# img_comp[:,:middle,:]=img_face[:,:middle,:].copy()
+# img_comp[:,middle:,:]=img_skull[:,middle:,:].copy()
+# cv2.imshow("half",img_comp)
+#
+# for i in range(alpha_width+1):
+#     alpha=(100-step*i)/100
+#     beta=1-alpha
+#     img_comp[:,start+i]=img_face[:,start+i]*alpha+img_skull[:,start+i]*beta
+#     print(i,alpha,beta)
+#
+# cv2.imshow("half skull",img_comp)
+# cv2.waitKey()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
