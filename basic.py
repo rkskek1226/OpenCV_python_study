@@ -241,16 +241,38 @@ import numpy as np
 # bitNot=cv2.bitwise_not(img1)
 
 
+# 쓰레시홀드(이진화, 전역 이진화)
+# src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
+# _,dst1=cv2.threshold(src,100,255,cv2.THRESH_BINARY)
+# ret,dst2=cv2.threshold(src,0,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU) # 오츠 알고리즘
+
+# 적응형 쓰레시홀드(지역 이진화)
+# src=cv2.imread("sudoku.jpg",cv2.IMREAD_GRAYSCALE)
+# def on_trackbar(pos):
+#     bsize=pos
+#     if bsize%2==0:
+#         bsize=bsize-1
+#     if bsize<3:
+#         bsize=3
+#
+#     dst=cv2.adaptiveThreshold(src,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,bsize,5)
+#     cv2.imshow("dst",dst)
+#
+# cv2.imshow("src",src)
+# cv2.namedWindow("dst")
+# cv2.createTrackbar("Block Size","dst",0,200,on_trackbar)
+# cv2.setTrackbarPos("Block Size","dst",11)
+# cv2.waitKey()
+
+
 # 히스토그램
 # src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
-
 # hist=cv2.calcHist([src],[0],None,[256],[0,256])
 
 # plt.plot(hist)
 # plt.show()
 #
 # src=cv2.imread("lenna.bmp")
-#
 # colors=['b','g','r']
 # channels=cv2.split(src)
 # for(ch,color) in zip(channels,colors):
