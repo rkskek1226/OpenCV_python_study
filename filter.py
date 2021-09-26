@@ -52,14 +52,44 @@ import numpy as np
 
 
 # 캐니 엣지
-src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
-dst=cv2.Canny(src,100,150)
-cv2.imshow("src",src)
-cv2.imshow("dst",dst)
-cv2.waitKey()
+# src=cv2.imread("lenna.bmp",cv2.IMREAD_GRAYSCALE)
+# dst=cv2.Canny(src,100,150)
+# cv2.imshow("src",src)
+# cv2.imshow("dst",dst)
+# cv2.waitKey()
 
 
+# 모폴로지(침식)
+# src=cv2.imread("morph_dot.png")
+# k=cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+# erosion1=cv2.erode(src,k)
+# erosion2=cv2.erode(src,None)
+# cv2.imshow("erosion1",erosion1)
+# cv2.imshow("erosion2",erosion2)
+# cv2.waitKey()
 
+# 모폴로지(팽창)
+# src=cv2.imread("morph_hole.png")
+# k=cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+# dst1=cv2.dilate(src,k)
+# dst2=cv2.dilate(src,None)
+# cv2.imshow("src",src)
+# cv2.imshow("dst1",dst1)
+# cv2.imshow("dst2",dst2)
+# cv2.waitKey()
+
+# 모폴로지(열기,닫기)
+# src1=cv2.imread("morph_dot.png",cv2.IMREAD_GRAYSCALE)
+# src2=cv2.imread("morph_hole.png",cv2.IMREAD_GRAYSCALE)
+#
+# k=cv2.getStructuringElement(cv2.MORPH_RECT,(5,5))
+# opening=cv2.morphologyEx(src1,cv2.MORPH_OPEN,k)
+# closing=cv2.morphologyEx(src2,cv2.MORPH_CLOSE,k)
+# cv2.imshow("src1",src1)
+# cv2.imshow("src2",src2)
+# cv2.imshow("opening",opening)
+# cv2.imshow("closing",closing)
+# cv2.waitKey()
 
 
 
