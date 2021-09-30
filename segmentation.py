@@ -1,4 +1,5 @@
 import sys
+import os
 import cv2
 import matplotlib.pyplot as plt
 import glob
@@ -108,6 +109,79 @@ import random
 # cv2.imshow("src_bin",src_bin)
 # cv2.imshow("dst",dst)
 # cv2.waitKey()
+
+
+# 그랩컷 1
+# src=cv2.imread("taekwonv1.jpg")
+# rc=cv2.selectROI(src) # x,y,width,height
+# mask=np.zeros(src.shape[:2],np.uint8)
+#
+# cv2.grabCut(src,mask,rc,None,None,5,cv2.GC_INIT_WITH_RECT)
+# mask2=np.where((mask==0)|(mask==2),0,1).astype("uint8")
+# dst=src*mask2[:,:,np.newaxis]
+#
+# cv2.imshow("dst",dst)
+# cv2.waitKey()
+
+# 그랩컷 2
+# src=cv2.imread("taekwonv1.jpg")
+# mask=np.zeros(src.shape[:2],np.uint8)
+# bgdModel=np.zeros((1,65),np.float64) # 배경 모델
+# fgdModel=np.zeros((1,65),np.float64) # 전경 모델
+#
+# rc=cv2.selectROI(src)
+# cv2.grabCut(src,mask,rc,bgdModel,fgdModel,1,cv2.GC_INIT_WITH_RECT)
+#
+# mask2=np.where((mask==0)|(mask==2),0,1).astype("uint8")
+# dst=src*mask[:,:,np.newaxis]
+#
+# cv2.imshow("dst",dst)
+#
+# def on_mouse(event,x,y,flags,param):
+#     if event==cv2.EVENT_LBUTTONDOWN: # foreground
+#         cv2.circle(dst,(x,y),3,(255,0,0),-1)
+#         cv2.circle(mask,(x,y),3,cv2.GC_FGD,-1)
+#         cv2.imshow("dst",dst)
+#     elif event==cv2.EVENT_RBUTTONDOWN: # background
+#         cv2.circle(dst,(x,y),3,(0,0,255),-1)
+#         cv2.circle(mask,(x,y),3,cv2.GC_BGD,-1)
+#         cv2.imshow("dst",dst)
+#     elif event==cv2.EVENT_MOUSEMOVE:
+#         if flags&cv2.EVENT_FLAG_RBUTTON:
+#             cv2.circle(dst,(x,y),3,(255,0,0),-1)
+#             cv2.circle(mask,(x,y),3,cv2.GC_FGD,-1)
+#             cv2.imshow("dst",dst)
+#         elif flags&cv2.EVENT_FLAG_RBUTTON:
+#             cv2.circle(dst,(x,y),3,(0,0,255),-1)
+#             cv2.circle(mask,(x,y),3,cv2.GC_BGD,-1)
+#             cv2.imshow("dst",dst)
+#
+# cv2.setMouseCallback("dst",on_mouse)
+#
+# while True:
+#     key=cv2.waitKey()
+#     if key==13: # Enter키
+#         cv2.grabCut(src,mask,rc,bgdModel,fgdModel,1,cv2.GC_INIT_WITH_MASK)
+#         mask2=np.where((mask==2)|(mask==0),0,1).astype("uint8")
+#         dst=src*mask2[:,:,np.newaxis]
+#         cv2.imshow("dst",dst)
+#     elif key==27: # esc키
+#         break
+#
+# cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
